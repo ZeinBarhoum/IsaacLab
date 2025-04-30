@@ -13,10 +13,11 @@
 set -e
 
 # Set tab-spaces
-tabs 4
+# tabs 4
 
 # get source directory
-export ISAACLAB_PATH="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
+# export ISAACLAB_PATH="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
+export ISAACLAB_PATH="$( cd "$( dirname "$0" )" &> /dev/null && pwd )"
 
 #==
 # Helper functions
@@ -178,7 +179,9 @@ setup_conda_env() {
         # add variables to environment during activation
         printf '%s\n' \
             '# for Isaac Sim' \
-            'source '${isaacsim_setup_conda_env_script}'' \
+            'cd '${ISAACLAB_PATH}'/_isaac_sim/' \
+            'source setup_conda_env.sh' \
+            'cd $OLDPWD' \
             '' >> ${CONDA_PREFIX}/etc/conda/activate.d/setenv.sh
     fi
 
